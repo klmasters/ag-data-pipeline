@@ -7,7 +7,7 @@ from psycopg2.extras import execute_values
 FRED_API_KEY = os.environ["FRED_API_KEY"]
 DB_URL = os.environ["SUPABASE_DB_URL"]
 
-SERIES_IDS = ["PCU311119311119H", "WPU0131"]
+SERIES_IDS = ["PCU311119311119H", "WPU0131","WPU0134"]
 
 
 def fetch_observations(series_id: str) -> list[dict]:
