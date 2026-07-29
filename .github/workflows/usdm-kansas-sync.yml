@@ -1,0 +1,26 @@
+name: USDM Kansas Weekly Sync
+
+on:
+  schedule:
+    - cron: '0 16 * * 1'  # Every Monday at 16:00 UTC
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install requests psycopg2-binary
+
+      - name: Run USDM Kansas sync
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: python fetch_usdm_kansas.py
