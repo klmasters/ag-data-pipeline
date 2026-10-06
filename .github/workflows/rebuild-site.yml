@@ -1,0 +1,22 @@
+name: Rebuild Evidence Site
+
+on:
+  schedule:
+    - cron: '0 17 * * 1'  # Every Monday at 17:00 UTC, an hour after the last weekly load starts (16:00)
+  workflow_dispatch:
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Netlify build
+        env:
+          NETLIFY_BUILD_HOOK_URL: ${{ secrets.NETLIFY_BUILD_HOOK_URL }}
+        run: |
+          if [ -z "$NETLIFY_BUILD_HOOK_URL" ]; then
+            echo "The NETLIFY_BUILD_HOOK_URL secret is not set"
+            exit 1
+          fi
+          # --fail makes curl exit non-zero on an HTTP error, so a failed trigger fails the run.
+          curl --fail --silent --show-error -X POST -d '{}' "$NETLIFY_BUILD_HOOK_URL"
+          echo "Netlify build triggered"
