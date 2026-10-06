@@ -1,3 +1,8 @@
 venv/
 .env
 __pycache__/
+
+# One-off USDA report exploration dumps (local only)
+all_reports.json
+cattle_candidates.json
+report_2885_all.json
