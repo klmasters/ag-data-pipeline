@@ -2,7 +2,10 @@ name: Rebuild Evidence Site
 
 on:
   schedule:
-    - cron: '0 17 * * 1'  # Every Monday at 17:00 UTC, an hour after the last weekly load starts (16:00)
+    # Every Tuesday at 12:00 UTC. The Monday loads can start hours late (GitHub does not
+    # guarantee schedule times; they have run 5-8 hours late), so this leaves a wide margin.
+    # It rebuilds whatever is in the database, so new data sources need no changes here.
+    - cron: '0 12 * * 2'
   workflow_dispatch:
 
 jobs:
